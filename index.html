@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Promposal for Deborah 💖</title>
+  <style>
+    body {
+      background-image: url('Deborah.jpg'); /* Replace with your own romantic image URL */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-family: 'Comic Sans MS', cursive;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+      backdrop-filter: blur(5px); /* Adds a subtle blur effect behind text */
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4da6;
+      margin-bottom: 1rem;
+    }
+
+    .heart {
+      width: 100px;
+      height: 90px;
+      background-color: #ff4da6;
+      position: relative;
+      transform: rotate(-45deg);
+      animation: pulse 1s infinite;
+      margin: 20px auto;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 100px;
+      height: 90px;
+      background-color: #ff4da6;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 50px;
+      top: 0;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: rotate(-45deg) scale(1);
+      }
+      50% {
+        transform: rotate(-45deg) scale(1.1);
+      }
+      100% {
+        transform: rotate(-45deg) scale(1);
+      }
+    }
+
+    .buttons {
+      margin-top: 2rem;
+      display: none;
+    }
+
+    button {
+      background-color: #ff4da6;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    #response {
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      color: #ff66a3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hey Deborah 💌</h1>
+  <div class="heart"></div>
+
+  <div class="buttons" id="promposal">
+    <h1>Deborah, will you go to prom with me?</h1>
+    <button onclick="sayYes()">Yes 💖</button>
+    <button onclick="sayNo()">No 😢</button>
+  </div>
+
+  <div id="response"></div>
+  <canvas id="confetti" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    // Show the promposal after a delay
+    setTimeout(() => {
+      document.getElementById("promposal").style.display = "block";
+    }, 3000);
+
+    function sayYes() {
+      document.getElementById("response").innerHTML = "YAY! Deborah said YES! 💃💖🎉";
+      launchConfetti();
+    }
+
+    function sayNo() {
+      document.getElementById("response").innerHTML = "😢 That’s okay, Deborah... you're still amazing!";
+    }
+
+    function launchConfetti() {
+      const duration = 4 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, {
+          particleCount,
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+  </script>
+
+</body>
+</html>
